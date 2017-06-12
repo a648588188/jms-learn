@@ -1,4 +1,4 @@
-package com.ryo.jms.listener;
+package com.ryo.jms.base.listener;
 
 import javax.jms.JMSException;
 import javax.jms.Message;

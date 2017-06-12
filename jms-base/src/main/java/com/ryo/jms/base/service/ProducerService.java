@@ -1,4 +1,4 @@
-package com.ryo.jms.service;
+package com.ryo.jms.base.service;
 
 
 import javax.jms.Destination;

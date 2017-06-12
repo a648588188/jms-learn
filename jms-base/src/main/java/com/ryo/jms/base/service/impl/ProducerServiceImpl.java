@@ -1,6 +1,6 @@
-package com.ryo.jms.service.impl;
+package com.ryo.jms.base.service.impl;
 
-import com.ryo.jms.service.ProducerService;
+import com.ryo.jms.base.service.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
