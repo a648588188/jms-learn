@@ -16,6 +16,23 @@
     </modules>
 
 
+    <properties>
+        <spring-version>4.3.9.RELEASE</spring-version>
+
+        <!--============================== All Plugins START==============================-->
+        <plugin.compiler.version>3.2</plugin.compiler.version>
+        <plugin.compiler.version>3.2</plugin.compiler.version>
+        <plugin.surefire.version>2.18.1</plugin.surefire.version>
+        <plugin.surefire.skip-it>true</plugin.surefire.skip-it>
+        <plugin.surefire.ignore-failure>true</plugin.surefire.ignore-failure>
+        <!--============================== All Plugins END  ==============================-->
+
+        <!--main-->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <compiler.level>1.7</compiler.level>
+
+    </properties>
+
 
     <dependencyManagement>
         <dependencies>
@@ -25,15 +42,18 @@
                 <artifactId>jms-base</artifactId>
                 <version>${project.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.ryo</groupId>
+                <artifactId>jms-listener</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
             <!--====================================== other ======================================-->
         </dependencies>
     </dependencyManagement>
 
 
-    <properties>
-        <spring-version>4.3.9.RELEASE</spring-version>
-    </properties>
+
     <dependencies>
         <!--test-->
         <dependency>
@@ -78,5 +98,50 @@
         </dependency>
 
     </dependencies>
-    
+
+    <build>
+        <finalName>script-generator</finalName>
+
+        <pluginManagement>
+            <!--============================== All Plugins ==============================-->
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${plugin.compiler.version}</version>
+                    <configuration>
+                        <source>${compiler.level}</source>
+                        <target>${compiler.level}</target>
+                        <encoding>${project.build.sourceEncoding}</encoding>
+                    </configuration>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${plugin.surefire.version}</version>
+                    <configuration>
+                        <skipTests>${plugin.surefire.skip-it}</skipTests>
+                        <testFailureIgnore>${plugin.surefire.ignore-failure}</testFailureIgnore>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <!--use plugins-->
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+            </plugin>
+
+        </plugins>
+    </build>
+
 </project>
