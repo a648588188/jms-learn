@@ -62,5 +62,71 @@
         <property name="messageListener" ref="consumerMessageListener" />
     </bean>
 
+    <!--============================== sessionAware 相关配置 ==============================-->
+    <!--这个是sessionAwareQueue目的地-->
+    <bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg>
+            <value>sessionAwareQueue</value>
+        </constructor-arg>
+    </bean>
+
+    <!-- 可以获取session的MessageListener -->
+    <bean id="consumerSessionAwareMessageListener"
+          class="com.ryo.jms.base.consumer.ConsumerSessionAwareMessageListener">
+        <property name="destination" ref="queueDestination"/>
+    </bean>
+
+    <!-- 消息监听容器 -->
+    <bean id="sessionAwareListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory" />
+        <property name="destination" ref="sessionAwareQueue" />
+        <property name="messageListener" ref="consumerSessionAwareMessageListener" />
+    </bean>
+
+    <!--============================== MessageListenerAdapter ==============================-->
+    <!-- 用于测试消息监听适配器的队列目的地 -->
+    <bean id="adapterQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg>
+            <value>adapterQueue</value>
+        </constructor-arg>
+    </bean>
+
+
+
+    <!-- 消息监听适配器 -->
+    <bean id="messageListenerAdapter" class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <!--指定解析的类-->
+        <property name="delegate">
+            <bean class="com.ryo.jms.base.consumer.ConsumerMessageListenerAdapterListener"/>
+        </property>
+        <!--指定解析的方法-->
+        <property name="defaultListenerMethod" value="receiveMessage"/>
+        <property name="defaultResponseDestination" ref="defaultResponseQueue"/>
+    </bean>
+
+    <!-- 消息监听适配器对应的监听容器 -->
+    <bean id="messageListenerAdapterContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="adapterQueue"/>
+        <property name="messageListener" ref="messageListenerAdapter"/><!-- 使用MessageListenerAdapter来作为消息监听器 -->
+    </bean>
+
+
+    <!-- 默认的消息回复队列 -->
+    <bean id="defaultResponseQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg>
+            <value>defaultResponseQueue</value>
+        </constructor-arg>
+    </bean>
+    <!-- defaultResponseQueue 对应的监听器 -->
+    <bean id="defaultResponseQueueListener"
+          class="com.ryo.jms.base.consumer.DefaultResponseQueueListener"/>
+    <!-- defaultResponseQueue 对应的监听容器 -->
+    <bean id="defaultResponseQueueMessageListenerContainer" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="defaultResponseQueue"/>
+        <property name="messageListener" ref="defaultResponseQueueListener"/>
+    </bean>
 
 </beans>
