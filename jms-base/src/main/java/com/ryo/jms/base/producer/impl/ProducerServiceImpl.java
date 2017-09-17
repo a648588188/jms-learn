@@ -1,6 +1,6 @@
-package com.ryo.jms.base.service.impl;
+package com.ryo.jms.base.producer.impl;
 
-import com.ryo.jms.base.service.ProducerService;
+import com.ryo.jms.base.producer.ProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
@@ -26,4 +26,5 @@ public class ProducerServiceImpl implements ProducerService {
 			}
 		});
 	}
+
 }

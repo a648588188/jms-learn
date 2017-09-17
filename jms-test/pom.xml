@@ -17,10 +17,6 @@
             <groupId>com.ryo</groupId>
             <artifactId>jms-base</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.ryo</groupId>
-            <artifactId>jms-listener</artifactId>
-        </dependency>
     </dependencies>
 
 </project>

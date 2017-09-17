@@ -1,6 +1,6 @@
 package com.ryo.jms.test.base;
 
-import com.ryo.jms.base.service.ProducerService;
+import com.ryo.jms.base.producer.ProducerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +26,6 @@ public class ProducerConsumerTest {
         for (int i = 0; i < 2; i++) {
             producerService.sendMessage(destination, "Hello! message is: " + (i + 1));
         }
-    }
-
-    @Test
-    public void showEx()
-    {
-        Exception ex = new IllegalArgumentException("name can not be null");
-        System.out.println(ex.toString());
     }
 
 }

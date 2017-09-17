@@ -1,8 +1,11 @@
-package com.ryo.jms.base.service;
+package com.ryo.jms.base.producer;
 
 
 import javax.jms.Destination;
 
+/**
+ * 消息生产者接口
+ */
 public interface ProducerService {
 
 	/**
@@ -10,6 +13,6 @@ public interface ProducerService {
 	 * @param destination
 	 * @param message
 	 */
-	public void sendMessage(Destination destination, String message);
+	void sendMessage(Destination destination, String message);
 
 }

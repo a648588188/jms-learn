@@ -12,7 +12,6 @@
     <modules>
         <module>jms-base</module>
         <module>jms-test</module>
-        <module>jms-listener</module>
     </modules>
 
 
