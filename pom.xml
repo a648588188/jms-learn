@@ -13,6 +13,8 @@
         <module>jms-base</module>
         <module>jms-test</module>
         <module>jms-rabbitmq</module>
+        <module>jms-kafka</module>
+        <module>jms-activemq</module>
     </modules>
 
 
