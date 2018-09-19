@@ -15,6 +15,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>jms-kafka</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>jms-kafka-spring</module>
+    </modules>
 
 
 </project>
