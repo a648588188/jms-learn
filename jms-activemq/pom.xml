@@ -18,7 +18,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>jms-activemq-spring</module>
-        <module>jms-activemq-spring-listener</module>
     </modules>
 
 
