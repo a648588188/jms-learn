@@ -6,15 +6,9 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
      http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-     http://www.springframework.org/schema/context
-     http://www.springframework.org/schema/context/spring-context-3.0.xsd
     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-
-    <!--扫描路径-->
-    <context:component-scan base-package="com.github.houbb.jms.learn.activemq.spring"/>
 
     <!-- Spring提供的JMS工具类，它可以进行消息发送、接收等 -->
     <bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
@@ -34,22 +28,26 @@
     </bean>
 
     <!--这个是队列目的地-->
-    <bean id="queueDestination" class="org.apache.activemq.command.ActiveMQQueue">
+    <bean id="adapterQueue" class="org.apache.activemq.command.ActiveMQQueue">
         <constructor-arg>
-            <value>queue</value>
+            <value>adapterQueue</value>
         </constructor-arg>
     </bean>
 
-    <!-- 消息监听器 -->
-    <bean id="consumerMessageListener"
-          class="com.github.houbb.jms.learn.activemq.spring.listener.ConsumerMessageListener"/>
+    <!--消息监听器-->
+    <bean id="messageListenerAdapter"
+          class="org.springframework.jms.listener.adapter.MessageListenerAdapter">
+        <constructor-arg>
+            <bean class="com.github.houbb.jms.learn.activemq.spring.adaptor.DefaultMessageDelegate"/>
+        </constructor-arg>
+    </bean>
 
-    <!-- 消息监听容器 -->
-    <bean id="jmsContainer"
+    <!-- 使用MessageListenerAdapter来作为消息监听器 -->
+    <bean id="messageListenerAdapterContainer"
           class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="connectionFactory" />
-        <property name="destination" ref="queueDestination" />
-        <property name="messageListener" ref="consumerMessageListener" />
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="adapterQueue"/>
+        <property name="messageListener" ref="messageListenerAdapter"/>
     </bean>
 
 </beans>

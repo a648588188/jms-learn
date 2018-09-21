@@ -18,7 +18,7 @@ import javax.jms.TextMessage;
  *
  * @author houbinbin
  */
-public class ConsunerMessageListener implements MessageListener {
+public class ConsumerMessageListener implements MessageListener {
 
     @Override
     public void onMessage(Message message) {

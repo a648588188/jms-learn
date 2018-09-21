@@ -3,15 +3,16 @@
  * jms All rights reserved.
  */
 
-package com.github.houbb.jms.learn.activemq.spring.service.impl;
+package com.github.houbb.jms.learn.activemq.spring;
 
-import com.github.houbb.jms.learn.activemq.spring.service.ProducerService;
-
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
-import org.springframework.stereotype.Service;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -21,28 +22,28 @@ import javax.jms.Session;
 /**
  * <p> </p>
  *
- * <pre> Created: 2018/9/20 上午9:04  </pre>
+ * <pre> Created: 2018/9/21 上午10:32  </pre>
  * <pre> Project: jms  </pre>
  *
  * @author houbinbin
  */
-@Service
-public class ProducerServiceImpl implements ProducerService {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("classpath:application-mq-listener-session.xml")
+public class ConsumerSessionAwareTest {
 
     @Autowired
     private JmsTemplate jmsTemplate;
 
     @Autowired
-    @Qualifier("queueDestination")
+    @Qualifier("sessionAwareQueue")
     private Destination destination;
 
-    @Override
-    public void sendMsg(String msg) {
-        System.out.println("生产者发了一个消息：" + msg);
+    @Test
+    public void sendMsg() {
         jmsTemplate.send(destination, new MessageCreator() {
             @Override
             public Message createMessage(Session session) throws JMSException {
-                return session.createTextMessage(msg);
+                return session.createTextMessage("SessionAware 发送消息测试。");
             }
         });
     }

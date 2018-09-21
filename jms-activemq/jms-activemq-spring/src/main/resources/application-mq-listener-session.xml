@@ -39,17 +39,32 @@
             <value>queue</value>
         </constructor-arg>
     </bean>
+    <bean id="sessionAwareQueue" class="org.apache.activemq.command.ActiveMQQueue">
+        <constructor-arg>
+            <value>sessionAwareQueue</value>
+        </constructor-arg>
+    </bean>
 
-    <!-- 消息监听器 -->
+
+    <!--消息监听器-->
     <bean id="consumerMessageListener"
           class="com.github.houbb.jms.learn.activemq.spring.listener.ConsumerMessageListener"/>
+    <bean id="consumerSessionAwareMessageListener"
+          class="com.github.houbb.jms.learn.activemq.spring.listener.ConsumerSessionAwareMessageListener"/>
 
     <!-- 消息监听容器 -->
     <bean id="jmsContainer"
           class="org.springframework.jms.listener.DefaultMessageListenerContainer">
-        <property name="connectionFactory" ref="connectionFactory" />
-        <property name="destination" ref="queueDestination" />
-        <property name="messageListener" ref="consumerMessageListener" />
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="queueDestination"/>
+        <property name="messageListener" ref="consumerMessageListener"/>
+    </bean>
+
+    <bean id="sessionAwareListenerContainer"
+          class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+        <property name="connectionFactory" ref="connectionFactory"/>
+        <property name="destination" ref="sessionAwareQueue"/>
+        <property name="messageListener" ref="consumerSessionAwareMessageListener"/>
     </bean>
 
 </beans>
